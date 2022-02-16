@@ -34,12 +34,13 @@ namespace AuthServer.Network
 
         public void SendHandShakeRes()
         {
-            int time_t = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            //int time_t = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            short time_t = (short)(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
             short data = (short)(Client.Handshake ^ 0x7e41);
             PacketWriter writer = new PacketWriter();
             writer.Type(-2);
             writer.WriteShort(data);
-            writer.WriteInt(time_t);
+            writer.WriteShort(time_t);
             Client.Send(writer.Finalize());
         }
 

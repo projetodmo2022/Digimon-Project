@@ -50,8 +50,7 @@ namespace GameServer.Network
             e.Client.User = new GameClient(e.Client);
             GameClient client = ((GameClient)e.Client.User);
             PacketWriter writer = new PacketWriter();
-            int time_t = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            e.Client.Handshake = (short)(0 & 0xFFFF);
+            e.Client.Handshake = (short)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() & 0xFFFF);
             writer.Type(0xFFFF);
             writer.WriteShort(0);
             writer.WriteShort(0);
@@ -1027,12 +1026,10 @@ namespace GameServer.Network
 
                 case -1:
                     {
-                        PacketWriter writer = new PacketWriter();
-                        client.time_t = (uint)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-                        short data = 0x7e41;
+                        PacketWriter writer = new();
                         writer.Type(-2);
-                        writer.WriteShort(data);
-                        writer.WriteInt((int)client.time_t);
+                        writer.WriteShort(0x7e41);
+                        writer.WriteUInt((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds()); 
                         Client.Send(writer.Finalize());
                         break;
                     }

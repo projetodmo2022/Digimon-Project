@@ -9,7 +9,7 @@ namespace Digital_World
         public static void LogInfo(string text, params object[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
+            //Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("[INFO] ");
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -22,7 +22,7 @@ namespace Digital_World
         public static void LogWarn(string text, params object[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
+            //Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("[WARN] ");
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -35,7 +35,7 @@ namespace Digital_World
         public static void LogDB(string text2, string text, params object[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
+            //Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"[{text2}] ");
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -48,7 +48,7 @@ namespace Digital_World
         public static void LogError(string text, params object[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
+            //Console.Write("[{0}] ", DateTime.Now.ToString(@"MM/dd/yyyy HH:mm:ss"));
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("[ERROR] ");
             Console.ForegroundColor = ConsoleColor.Gray;

@@ -21,7 +21,7 @@ namespace Yggdrasil.Database
             {
                 using (BitReader read = new BitReader(s))
                 {
-                    read.Seek(228);
+                    read.Seek(334);
                     int count1 = read.ReadInt();
                     //Console.WriteLine(count1+"Count");
                     for (int i = 0; i < count1; i++)
@@ -82,10 +82,10 @@ namespace Yggdrasil.Database
 
                         //CashShop.Add(m.unique_id, m);
                     }
-                    
+
                     int EXPu1 = read.ReadInt();
                     int EXPu2 = read.ReadInt();
-                    for (int i = 0; i < EXPu2*2; i++)
+                    for (int i = 0; i < EXPu2 * 2; i++)
                     {
                         read.ReadByte();
                     }
@@ -128,7 +128,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -191,7 +191,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -254,7 +254,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -318,7 +318,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -382,7 +382,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -445,7 +445,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -508,7 +508,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -571,7 +571,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -634,7 +634,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -697,7 +697,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -761,7 +761,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -824,7 +824,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -887,7 +887,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -950,7 +950,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -1013,7 +1013,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -1076,7 +1076,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -1139,7 +1139,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -1202,7 +1202,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -1266,7 +1266,7 @@ namespace Yggdrasil.Database
                             read.ReadShort();
                             int ItemCount = read.ReadInt(); m.ItemCount = ItemCount;
 
-                            m.Item = new int[][] {new int[ItemCount], new int[ItemCount]};
+                            m.Item = new int[][] { new int[ItemCount], new int[ItemCount] };
 
 
                             for (int g = 0; g < ItemCount; g++)
@@ -1280,10 +1280,10 @@ namespace Yggdrasil.Database
                         }
 
                         //CashShop.Add(m.unique_id, m);
-                
+
                     }
                 }
-                
+
 
                 SysCons.LogDB("CashShopDB", "Loaded {0} entries.", CashShop.Count);
             }
@@ -1296,7 +1296,7 @@ namespace Yggdrasil.Database
             else
                 return null;
 
-            
+
         }
 
     }
@@ -1309,9 +1309,9 @@ namespace Yggdrasil.Database
         public string Date1;
         public string Date2;
         public byte u1;
-        public int unique_id,id_2,id_3 = 0;
+        public int unique_id, id_2, id_3 = 0;
         public int[] price;
-        public int [] id;
+        public int[] id;
         public int[][] Item;
         public int prices;
         public int ItemCount;

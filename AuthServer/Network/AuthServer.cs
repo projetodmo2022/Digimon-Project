@@ -32,13 +32,12 @@ namespace AuthServer.Network
         {
             SysCons.LogInfo("Client connected: {0}", e.Client.ToString());
             e.Client.User = new AuthClient(e.Client);
-            AuthClient client = ((AuthClient)e.Client.User);
             PacketWriter writer = new PacketWriter();
-            int time_t = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-            e.Client.Handshake = (short)(0 & 0xFFFF);
+            e.Client.Handshake = (short)(DateTimeOffset.UtcNow.ToUnixTimeSeconds() & 0xFFFF);
             writer.Type(0xFFFF);
             writer.WriteShort(e.Client.Handshake);
             if (e.Client.IsConnected) e.Client.Send(writer.Finalize());
+            //if (e.Client.IsConnected) e.Client.Send(new PacketFFFF(e.Client.Handshake));
         }
 
         private void AuthServ_OnDisconnect(object sender, ClientEventArgs e)
