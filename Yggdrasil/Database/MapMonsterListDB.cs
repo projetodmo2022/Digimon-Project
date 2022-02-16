@@ -18,6 +18,7 @@ namespace Yggdrasil.Database
 
         public static void Load(string fileName, List<MonsterEntity> MonstersEntity)
         {
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 if (Mapmonsters.Count > 0) return;

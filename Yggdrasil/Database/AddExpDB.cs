@@ -14,7 +14,7 @@ namespace Yggdrasil.Database
         public static Dictionary<int, sAddExp> AddExpList = new Dictionary<int, sAddExp>();
         public static void Load(string fileName)
         {
-            if (AddExpList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))

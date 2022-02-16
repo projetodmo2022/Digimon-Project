@@ -18,7 +18,7 @@ namespace Yggdrasil.Database
         {
             using (Stream s = File.OpenRead(fileName))
             {
-                if (exchanges.Count > 0) return;
+                if (File.Exists(fileName) == false) return;
                 using (BitReader read = new BitReader(s))
                 {
                     int count = read.ReadInt();

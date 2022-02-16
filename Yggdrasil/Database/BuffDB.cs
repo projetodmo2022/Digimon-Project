@@ -14,7 +14,7 @@ namespace Yggdrasil.Database
 
         public static void Load(string fileName)
         {
-            if (BuffList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
@@ -38,9 +38,9 @@ namespace Yggdrasil.Database
             else
                 return null;
         }
-}
+    }
 
-public class BuffData
+    public class BuffData
     {
         public ushort BuffID;
         public string Desc;

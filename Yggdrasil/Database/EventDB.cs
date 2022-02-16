@@ -21,7 +21,7 @@ namespace Yggdrasil.Database
 		public static Dictionary<int, sRECOMMENDE> sRECOMMENDEList = new Dictionary<int, sRECOMMENDE>();
 		public static void Load(string fileName)
 		{
-			if (sRECOMMENDEList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
 			using (Stream s = File.OpenRead(fileName))
 			{
 				using (BitReader read = new BitReader(s))

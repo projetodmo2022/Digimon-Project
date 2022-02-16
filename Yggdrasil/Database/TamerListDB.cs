@@ -15,7 +15,7 @@ namespace Yggdrasil.Database
         public static Dictionary<int, CsEmotion> CsEmotionList = new Dictionary<int, CsEmotion>();
         public static void Load(string fileName)
         {
-            if (TamerListsINFOList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
@@ -37,7 +37,7 @@ namespace Yggdrasil.Database
                 }
             }
 
-            if (CsEmotionList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))

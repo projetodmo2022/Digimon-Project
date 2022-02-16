@@ -31,7 +31,7 @@ namespace Yggdrasil.Database
         public static Dictionary<int, TalkMessage> messageList = new Dictionary<int, TalkMessage>();
         public static void Load(string fileName)
         {
-            if (tutorialList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
@@ -99,6 +99,7 @@ namespace Yggdrasil.Database
             if (digimonRewardList.Count > 0) return;
             using (Stream s = File.OpenRead(fileName))
             {
+                if (File.Exists(fileName) == false) return;
                 using (BitReader read = new BitReader(s))
                 {
                     int count = read.ReadInt();
@@ -122,6 +123,7 @@ namespace Yggdrasil.Database
             if (messageList.Count > 0) return;
             using (Stream s = File.OpenRead(fileName))
             {
+                if (File.Exists(fileName) == false) return;
                 using (BitReader read = new BitReader(s))
                 {
                     int count = read.ReadInt();

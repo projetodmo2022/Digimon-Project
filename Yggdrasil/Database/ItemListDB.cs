@@ -20,7 +20,7 @@ namespace Yggdrasil.Database
         public static void Load(string fileName)
         {
 
-            if (Items.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (BitReader read = new BitReader(File.OpenRead(fileName)))
             {
 

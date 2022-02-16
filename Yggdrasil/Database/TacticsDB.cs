@@ -13,9 +13,10 @@ namespace Yggdrasil.Database
     {
         public static Dictionary<int, TDBTactic> Tactics = new Dictionary<int, TDBTactic>();
 
-        public static void Load(string fName)
+        public static void Load(string fileName)
         {
-            using (Stream s = File.OpenRead(fName))
+            if (File.Exists(fileName) == false) return;
+            using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
                 {

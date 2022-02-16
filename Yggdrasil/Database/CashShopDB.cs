@@ -14,10 +14,10 @@ namespace Yggdrasil.Database
     {
         public static Dictionary<int, CASHINFO> CashShop = new Dictionary<int, CASHINFO>();
 
-        public static void Load(string filename)
+        public static void Load(string fileName)
         {
-
-            using (Stream s = File.OpenRead(filename))
+            if (File.Exists(fileName) == false) return;
+            using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
                 {

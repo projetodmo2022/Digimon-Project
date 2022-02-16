@@ -15,9 +15,10 @@ namespace Yggdrasil.Database
 
 		public static void Load(string fileName)
 		{
-			if (achieves.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
 			using (Stream s = File.OpenRead(fileName))
 			{
+                
 				using (BitReader read = new BitReader(s))
 				{
 					int dcount = 18;   //Parte sem funçao alguma ainda nao descobri o sentido dela

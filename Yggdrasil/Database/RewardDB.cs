@@ -14,7 +14,7 @@ namespace Yggdrasil.Database
         public static Dictionary<int, sINFOReward> sinfoRewardList = new Dictionary<int, sINFOReward>();
          public static void Load(string fileName)
         {
-            if (sinfoRewardList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))

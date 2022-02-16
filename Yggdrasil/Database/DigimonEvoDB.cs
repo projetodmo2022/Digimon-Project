@@ -17,8 +17,7 @@ namespace Yggdrasil.Database
         {
             int get_position = 0;
 
-            if (EvolutionList.Count > 0) return;
-
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))

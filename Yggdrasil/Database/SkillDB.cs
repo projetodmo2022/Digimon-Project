@@ -15,7 +15,7 @@ namespace Yggdrasil.Database
 
         public static void Load(string fileName)
         {
-            if (SkillList.Count > 0) return;
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))

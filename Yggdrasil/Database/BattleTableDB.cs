@@ -14,31 +14,31 @@ namespace Yggdrasil.Database
     {
         public static Dictionary<int, WorldMapInfo> WorldMapInfoList = new Dictionary<int, WorldMapInfo>();
 
-    public static void Load(string fileName)
-    {
-        if (WorldMapInfoList.Count > 0) return;
-        using (Stream s = File.OpenRead(fileName))
+        public static void Load(string fileName)
         {
-            using (BitReader read = new BitReader(s))
+            if (File.Exists(fileName) == false) return;
+            using (Stream s = File.OpenRead(fileName))
             {
-                int count = read.ReadInt();
-                for (int i = 0; i < count; i++)
+                using (BitReader read = new BitReader(s))
                 {
-                    WorldMapInfo mapInfo = new WorldMapInfo();
-                    mapInfo.s_nID = read.ReadUShort();
-                    mapInfo.s_nWorldType = read.ReadByte();
-                    mapInfo.s_nUI_X = read.ReadUShort();
-                    mapInfo.s_nUI_Y = read.ReadUShort();
-                    if (!WorldMapInfoList.ContainsKey(mapInfo.s_nID))
+                    int count = read.ReadInt();
+                    for (int i = 0; i < count; i++)
                     {
-                        WorldMapInfoList.Add(mapInfo.s_nID, mapInfo);
-                    }
+                        WorldMapInfo mapInfo = new WorldMapInfo();
+                        mapInfo.s_nID = read.ReadUShort();
+                        mapInfo.s_nWorldType = read.ReadByte();
+                        mapInfo.s_nUI_X = read.ReadUShort();
+                        mapInfo.s_nUI_Y = read.ReadUShort();
+                        if (!WorldMapInfoList.ContainsKey(mapInfo.s_nID))
+                        {
+                            WorldMapInfoList.Add(mapInfo.s_nID, mapInfo);
+                        }
 
+                    }
                 }
             }
+            SysCons.LogDB("BattleTable.bin", "Loaded {0} BattleTable.", WorldMapInfoList.Count);
         }
-        SysCons.LogDB("BattleTable.bin", "Loaded {0} BattleTable.", WorldMapInfoList.Count);
     }
-}
 }
 

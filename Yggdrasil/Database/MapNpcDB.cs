@@ -16,6 +16,7 @@ namespace Yggdrasil.Database
 
         public static void Load(string fileName)
         {
+            if (File.Exists(fileName) == false) return;
             using (Stream s = File.OpenRead(fileName))
             {
                 if (npcs.Count > 0) return;
