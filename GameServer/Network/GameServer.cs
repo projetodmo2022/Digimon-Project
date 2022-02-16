@@ -1094,28 +1094,28 @@ namespace GameServer.Network
                         EXP.WriteInt(5);
                         EXP.WriteInt(0);
                         EXP.WriteInt(5500);
-                        PacketWriter w2 = new PacketWriter();
-                        w2.Type(3134);
-                        w2.WriteInt(0);
-                        w2.WriteInt(0);
-                        w2.WriteInt(0);
-                        PacketWriter w3 = new PacketWriter();
-                        w3.WriteByte(1);
-                        PacketWriter w4 = new PacketWriter();
+                        //PacketWriter w2 = new PacketWriter();
+                        //w2.Type(3134);
+                        //w2.WriteInt(0);
+                        //w2.WriteInt(0);
+                        //w2.WriteInt(0);
+                        //PacketWriter w3 = new PacketWriter();
+                        //w3.WriteByte(1);
+                        //PacketWriter w4 = new PacketWriter();
                         //w4.Type(9905);
-                        w4.WriteUInt(Tamer.UID);
-                        w4.WriteUInt(Tamer.Partner.UID);
-                        w4.WriteShort(1493);
-                        w4.WriteShort(1493);
-                        w4.WriteInt(0);
-                        w4.WriteInt(0);
-                        PacketWriter w5 = new PacketWriter();
-                        w5.Type(3133);
-                        w5.WriteByte(0);
-                        w5.WriteShort(14);
-                        PacketWriter w6 = new PacketWriter();
-                        w6.Type(3136);
-                        w6.WriteShort(0);
+                        //w4.WriteUInt(Tamer.UID);
+                        //w4.WriteUInt(Tamer.Partner.UID);
+                        //w4.WriteShort(1493);
+                        //w4.WriteShort(1493);
+                        //w4.WriteInt(0);
+                        //w4.WriteInt(0);
+                        //PacketWriter w5 = new PacketWriter();
+                        //w5.Type(3133);
+                        //w5.WriteByte(0);
+                        //w5.WriteShort(14);
+                        //PacketWriter w6 = new PacketWriter();
+                        //w6.Type(3136);
+                        //w6.WriteShort(0);
                         PacketWriter w7 = new PacketWriter();
 
                         /*if (client.Membership != 0)
@@ -1141,7 +1141,8 @@ namespace GameServer.Network
                         w8.WriteUInt(Tamer.UID);
                         w8.WriteByte(0);
 
-                        Client.Send(Combine(EXP.Finalize(), w2.Finalize(), w3.Finalize(), w4.Finalize(), w5.Finalize(), w6.Finalize(), Inventory.ToArray(), Storage.ToArray(), AccountS.Finalize(), crowns.ToArray(), new Channels().ToArray()));
+                        //Client.Send(Combine(EXP.Finalize(), w2.Finalize(), w3.Finalize(), w4.Finalize(), w5.Finalize(), w6.Finalize(), Inventory.ToArray(), Storage.ToArray(), AccountS.Finalize(), crowns.ToArray(), new Channels().ToArray()));
+                        Client.Send(Combine(EXP.Finalize(), Inventory.ToArray(), Storage.ToArray(), AccountS.Finalize(), crowns.ToArray(), new Channels().ToArray()));
                         DigimonData data = DigimonListDB.GetDigimon(Tamer.Partner.CurrentForm);
                         if (data != null)
                         {
