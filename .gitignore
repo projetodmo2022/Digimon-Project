@@ -1,0 +1,13 @@
+
+AuthServer/obj/*
+Build/*
+CharServer/obj/*
+GameServer/obj/*
+DigitalWorld/obj/*
+DigitalWorld/bin/*
+Yggdrasil/obj/*
+Yggdrasil/bin/*
+ChangeIP/obj/*
+ChangeIP/bin/*
+.vs/*
+.idea/*
