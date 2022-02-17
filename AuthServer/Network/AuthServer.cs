@@ -124,11 +124,11 @@ namespace AuthServer.Network
                 case -1:
                     {
                         PacketWriter writer = new PacketWriter();
-                        int time_t = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                        uint time_t = (uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                         short data = (short)(client.Client.Handshake ^ 0x7e41);
                         writer.Type(-2);
                         writer.WriteShort(data);
-                        writer.WriteInt(time_t);
+                        writer.WriteUInt(time_t);
                         Client.Send(writer.Finalize());
                         break;
                     }
