@@ -139,7 +139,7 @@ namespace GameServer.Network
             //TutorialDB.Load("Data\\Tutorial.bin");
             //UITextDB.Load("Data\\UIText.bin");
             //WeatherDB.Load("Data\\Weather.bin");
-            //WorldMapDB.Load("Data\\WorldMap.bin");
+            WorldMapDB.Load("Data\\WorldMap.bin");
             World();
             //SpawnMonsters();
             Console.Title = "Game Server";
