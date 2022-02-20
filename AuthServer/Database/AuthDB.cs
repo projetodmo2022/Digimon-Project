@@ -15,6 +15,55 @@ namespace AuthServer.Database
     {
         public readonly IDatabaseContext _context;
 
+
+        //Sistema de codificaçao da senha
+        public static string SHA2(string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SHA256 shaM = new SHA256Managed())
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes(value);
+                buffer = shaM.ComputeHash(buffer);
+                for (int i = 0; i < buffer.Length; i++)
+                    sb.Append(buffer[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        public static string SHA5(string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes(value);
+                buffer = shaM.ComputeHash(buffer);
+                for (int i = 0; i < buffer.Length; i++)
+                    sb.Append(buffer[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            //compute hash from the bytes of text  
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            //get hash result after compute it  
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                //change it into 2 hexadecimal digits  
+                //for each byte  
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
+        }
+
         public AuthDB(IDatabaseContext context)
         {
             _context = context;
@@ -379,23 +428,7 @@ namespace AuthServer.Database
             }
             return message;
         }
-
-
-        public static string SHA2(string value)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            using (SHA256 shaM = new SHA256Managed())
-            {
-                byte[] buffer = Encoding.UTF8.GetBytes(value);
-                buffer = shaM.ComputeHash(buffer);
-
-                for (int i = 0; i < buffer.Length; i++)
-                    sb.Append(buffer[i].ToString("X2"));
-            }
-            return sb.ToString();
-        }
-
+        
         public KeyValuePair<int, string> GetServer(int ID)
         {
             KeyValuePair<int, string> k = new KeyValuePair<int, string>(7030, "127.0.0.1");
@@ -425,7 +458,7 @@ namespace AuthServer.Database
             return k;
         }
 
-
+        
         /// <summary>
         /// Get the number of characters for a specific account id
         /// </summary>
@@ -461,5 +494,6 @@ namespace AuthServer.Database
             return characters;
         }
 
+       
     }
 }

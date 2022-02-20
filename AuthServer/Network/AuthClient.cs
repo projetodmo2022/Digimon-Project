@@ -8,15 +8,14 @@ namespace AuthServer.Network
     /// Description of AuthClient.
     /// </summary>
     public class AuthClient : IUser
-    {
-        /// <summary>
+	{
+		/// <summary>
         /// TCP connection.
         /// </summary>
         private IClient _Client = null;
-        public IClient Client
-        {
-            get { return _Client; }
-            set { _Client = value; }
+        public IClient Client {
+        	get {return _Client;}
+        	set {_Client = value;}
         }
 
         public uint AccountID;
@@ -26,11 +25,11 @@ namespace AuthServer.Network
         public string Password;
         public string SecondaryPassword;
         public int Characters;
-
-        public AuthClient(IClient client)
-        {
-            Client = client;
-        }
+        
+		public AuthClient(IClient client)
+		{
+			Client = client;
+		}
 
         public void SendHandShakeRes()
         {
@@ -46,12 +45,12 @@ namespace AuthServer.Network
 
         public void SendLoginDisconnectResponse()
         {
-
+   
         }
 
         public void SendLoginResponse(byte[] data)
         {
-
+  
         }
-    }
+	}
 }

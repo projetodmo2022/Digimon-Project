@@ -2,26 +2,80 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using AuthServer.Database.Interfaces;
+using Yggdrasil;
 using Digital_World;
 using Microsoft.Extensions.Configuration;
 using Yggdrasil.Network;
 using Yggdrasil.Packets;
 
+
 namespace AuthServer.Network
 {
     /// <summary>
     /// Description of AuthServer.
+    /// Sistema de senha =  MD5+SHA512
+    /// GhostNigth
     /// </summary>
     public class AuthServ : Server
     {
-
+        
         private readonly ILoginDatabase _loginDatabase;
         private readonly IConfiguration _configuration;
+        
+        
+        //Sistema de codificaçao da senha
+        public static string SHA2(string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SHA256 shaM = new SHA256Managed())
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes(value);
+                buffer = shaM.ComputeHash(buffer);
+                for (int i = 0; i < buffer.Length; i++)
+                    sb.Append(buffer[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        public static string SHA5(string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes(value);
+                buffer = shaM.ComputeHash(buffer);
+                for (int i = 0; i < buffer.Length; i++)
+                    sb.Append(buffer[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        public static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            //compute hash from the bytes of text  
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            //get hash result after compute it  
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                //change it into 2 hexadecimal digits  
+                //for each byte  
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
+        }
 
         public AuthServ(ILoginDatabase loginDatabase, IConfiguration configuration)
-        {
-            OnConnect += AuthServ_OnConnect;
+		{
+			OnConnect += AuthServ_OnConnect;
             OnDisconnect += AuthServ_OnDisconnect;
             DataReceived += AuthServ_OnDataReceived;
             _loginDatabase = loginDatabase;
@@ -38,11 +92,12 @@ namespace AuthServer.Network
             writer.WriteShort(e.Client.Handshake);
             if (e.Client.IsConnected) e.Client.Send(writer.Finalize());
             //if (e.Client.IsConnected) e.Client.Send(new PacketFFFF(e.Client.Handshake));
+
         }
 
         private void AuthServ_OnDisconnect(object sender, ClientEventArgs e)
         {
-            AuthClient client = ((AuthClient)e.Client.User);
+            AuthClient client = ((AuthClient) e.Client.User);
             SysCons.LogInfo("Client disconnected: {0}", e.Client.ToString());
         }
 
@@ -50,8 +105,8 @@ namespace AuthServer.Network
         {
             Process((AuthClient)e.Client.User, data);
         }
-
-        public override void Run()
+		
+		public override void Run()
         {
             Console.Title = "Auth Server";
             var serverInformation = _configuration.GetSection("LoginServer");
@@ -139,56 +194,43 @@ namespace AuthServer.Network
 
                 case 3301:
                     {
-                        packet.Seek(9);
+                        uint Version = packet.ReadUInt();
+                        int UserType_size = packet.ReadByte();
+                        byte[] UserType_get = new byte[UserType_size];
+
+                        for (int i = 0; i < UserType_size; i++)
+                        {
+                            UserType_get[i] = packet.ReadByte();
+                        }
+                        string UserType = Encoding.ASCII.GetString(UserType_get).Trim();
                         int u_size = packet.ReadByte();
                         byte[] username_get = new byte[u_size];
-
                         for (int i = 0; i < u_size; i++)
                         {
                             username_get[i] = packet.ReadByte();
                         }
                         string username = Encoding.ASCII.GetString(username_get).Trim();
-                        packet.Seek(9 + username.Length + 2);
-
+                        packet.ReadByte();
                         int p_size = packet.ReadByte();
-
                         byte[] password_get = new byte[p_size];
-
-
                         for (int i = 0; i < p_size; i++)
                         {
                             password_get[i] = packet.ReadByte();
                         }
-
                         string password = Encoding.ASCII.GetString(password_get).Trim();
-
-                        packet.Seek(9 + username.Length + 2 + password.Length + 2);
-
                         int c_size = packet.ReadByte();
-
                         byte[] cpu_get = new byte[c_size];
-
-
                         for (int i = 0; i < c_size; i++)
                         {
                             cpu_get[i] = packet.ReadByte();
                         }
-
                         string cpu = Encoding.ASCII.GetString(cpu_get).Trim();
-
-
-                        packet.Seek(9 + username.Length + 2 + password.Length + 2 + cpu.Length + 2);
-
                         int f_size = packet.ReadByte();
-
                         byte[] gpu_get = new byte[f_size];
-
-
                         for (int i = 0; i < f_size; i++)
                         {
                             gpu_get[i] = packet.ReadByte();
                         }
-
                         string gpu = Encoding.ASCII.GetString(gpu_get).Trim();
                         int check = _loginDatabase.Validate(client, username, password);
                         SysCons.LogInfo("USER LOGIN-IN: {0}", username);
@@ -229,10 +271,10 @@ namespace AuthServer.Network
 
                         int serverID = BitConverter.ToInt32(buffer, 4);
 
-                        //FROM HERE YOU WILL GET PORT & IP
+                        //A PARTIR DAQUI VOCÊ TERÁ PORT & IP
                         KeyValuePair<int, string> server = _loginDatabase.GetServer(serverID);
 
-                        //LOAD THE USER - > LOADS ALL INFO OF CONNECTING CLIENT INTO THE CLIENT CLASS
+                        //CARREGAR O USUÁRIO - > CARREGAR TODAS AS INFORMAÇÕES DO CLIENTE CONECTANDO NA CLASSE CLIENTE
                         _loginDatabase.LoadUser(client);
                         PacketWriter Server = new PacketWriter();
                         Server.Type(901);
