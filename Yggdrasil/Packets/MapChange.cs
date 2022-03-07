@@ -16,9 +16,9 @@ namespace Yggdrasil.Packets.Game
             packet.Type(1709);
             packet.WriteString(IP);
             packet.WriteInt(Port);
-            packet.WriteInt(Portal.MapId);
-            packet.WriteInt(Portal.uInts1[1]);           //X?
-            packet.WriteInt(Portal.uInts1[2]);           //Y?
+            packet.WriteInt(Portal.s_dwPortalID);
+            packet.WriteInt(Portal.s_nDestTargetX);           //X?
+            packet.WriteInt(Portal.s_nDestTargetY);           //Y?
             packet.WriteString(Map);
         }
 

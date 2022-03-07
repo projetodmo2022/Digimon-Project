@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
-using System.Windows.Media;
 using Yggdrasil.Entities;
-using Yggdrasil;
 using Digital_World;
 
 namespace Yggdrasil.Database
@@ -22,14 +20,7 @@ namespace Yggdrasil.Database
             {
                 using (BitReader read = new BitReader(s))
                 {
-                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\GDMODigiDB.txt", true))
-                    {
-                        if (IsDebug)
-                        {
-                            file.WriteLine("Species | Model | Display Name | Name | HP | DS | DE | AS | MS | AT | CT | EV | AR | HT |");
-                        }
-                        //436 - > FOR UPDATED DMO
-                        int count = read.ReadInt();
+                    int count = read.ReadInt();
                         for (int i = 0; i < count; i++)
                         {
                             read.Seek(4 + i * 572);
@@ -88,25 +79,13 @@ namespace Yggdrasil.Database
                             read.Skip(4);
                             digiData.Skill5_ID = read.ReadInt();
 
-                            if (IsDebug)
-                            {
-                                file.WriteLine(digiData.Species + "|" + digiData.Model + " | " + digiData.DisplayName +
-                                               " | " + digiData.Name + " | " + digiData.HP + " | " + digiData.DS +
-                                               " | " + digiData.DE + " | " + digiData.AS + " | " + digiData.MS +
-                                               " | " + digiData.AT + " | " + digiData.CR + " | " + digiData.EV +
-                                               " | " + digiData.AR + " | " + digiData.HT);
-                            }
-                            // Console.WriteLine(digiData.uShort1);
-
-                            //Console.WriteLine(digiData.Skill3);
-
-                            //Console.WriteLine("---------------------------");
+                            
 
                             Digimon.Add(digiData.Species, digiData);
 
 
                         }
-                    }
+                    
                 }
             }
             SysCons.LogDB("Digimon_List.bin", "Loaded {0} digimons.", Digimon.Count);

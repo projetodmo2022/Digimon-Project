@@ -95,13 +95,13 @@ namespace GameServer.Network
             //BattleTableDB.Load("Data\\BattleTable.bin");
             //BuffDB.Load("Data\\Buff.bin");
             //CashShopDB.Load("Data\\CashShop.bin");
-            //CharCreateTableDB.Load("Data\\CharCreateTable.bin");
-            //CuidDBCuidDB.Load("Data\\Cuid.bin");
-            //DMBaseDB.Load("Data\\DMBase.bin");
+            CharCreateTableDB.Load("Data\\CharCreateTable.bin");
+            CuidDB.Load("Data\\Cuid.bin");
+            DMBaseDB.Load("Data\\DMBase.bin");
             //Data_ExchangeDB.Load("Data\\Data_Exchange.bin");
             DigimonEvoDB.Load("Data\\DigimonEvo.bin");
             DigimonListDB.Load("Data\\Digimon_List.bin");
-            //DigimonParcelDB.Load("Data\\DigimonParcel.bin");
+            DigimonParcelDB.Load("Data\\DigimonParcel.bin");
             //Digimon_BookDB.Load("Data\\Digimon_Book.bin");
             //EffectListDB.Load("Data\\EffectList.bin");
             //EventDB.Load("Data\\Event.bin");
@@ -112,12 +112,12 @@ namespace GameServer.Network
             //MapCharLightDB.Load("Data\\MapCharLight.bin");
             MapListDB.Load("Data\\MapList.bin");
             MapMonsterListDB.Load("Data\\MapMonsterList.bin", MonstersEntity);
+            MonstersDB.Load("Data\\Monster.bin", MonstersEntity);
             //MapNpcDB.Load("Data\\MapNpc.bin");
             //MapObjectDB.Load("Data\\MapObject.bin");
             MapPortalDB.Load("Data\\MapPortal.bin");
             //MapRegionDB.Load("Data\\MapRegion.bin");
-            //MasterCardDB.Load("Data\\MasterCard.bin");
-            MonstersDB.Load("Data\\Monster.bin", MonstersEntity);
+            //MasterCardDB.Load("Data\\MasterCard.bin");        
             //NatureDB.Load("Data\\Nature.bin");
             //NewTutorialDB.Load("Data\\NewTutorial.bin");
             //New_ElementDB.Load("Data\\New_Element.bin");
@@ -126,7 +126,7 @@ namespace GameServer.Network
             //Passive_AbilityDB.Load("Data\\Passive_Ability.bin");
             QuestDB.Load("Data\\Quest.bin");
             //RewardDB.Load("Data\\Reward.bin");
-            //RideDB.Load("Data\\Ride.bin");
+            RideDB.Load("Data\\Ride.bin");
             //SceneDB.Load("Data\\Scene.bin");
             //ServerTransferDB.Load("Data\\ServerTransfer.bin");
             //SkillDB.Load("Data\\Skill.bin");
@@ -1601,7 +1601,7 @@ namespace GameServer.Network
                             if (map != null)
                             {
                                 _gameDatabase.SaveTamer(client);
-                                Client.Send(new MapChange(HostIP, HostPort, Region.MapId, Region.X, Region.Y, map.DisplayName).ToArray());
+                                Client.Send(new MapChange(HostIP, HostPort, Region.MapId, Region.s_nCenterX, Region.s_nCenterY, map.DisplayName).ToArray());
                                 Client.Send(new SendHandle(Tamer.UID).ToArray());
                             }
                         }
@@ -1694,7 +1694,7 @@ namespace GameServer.Network
                     {
                         int portalId = packet.ReadInt();
                         Portal Portal = MapPortalDB.GetPortal(portalId);
-                        MapData Map = MapListDB.GetMap(Portal.MapId);
+                        MapData Map = MapListDB.GetMap(Portal.s_dwPortalID);
 
                         Tamer.Location = new Position(Portal);
 

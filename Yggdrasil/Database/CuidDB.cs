@@ -5,14 +5,15 @@ using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
 using Yggdrasil.Entities;
-using Yggdrasil;
 using Digital_World;
+
 
 namespace Yggdrasil.Database
 {
     public class CuidDB
     {
-        public static Dictionary<int, WorldMapInfo> WorldMapInfoList = new Dictionary<int, WorldMapInfo>();
+        public static Dictionary<string, Cuid> Cuid = new Dictionary<string, Cuid>();
+        public static Dictionary<string, CuidChat> CuidChat = new Dictionary<string, CuidChat>();
 
         public static void Load(string fileName)
         {
@@ -24,22 +25,56 @@ namespace Yggdrasil.Database
                     int count = read.ReadInt();
                     for (int i = 0; i < count; i++)
                     {
-                        read.Seek(4 + i * 476);
-                        WorldMapInfo mapInfo = new WorldMapInfo();
-                        mapInfo.s_nID = read.ReadUShort();
-                        mapInfo.s_nWorldType = read.ReadByte();
-                        mapInfo.s_nUI_X = read.ReadUShort();
-                        mapInfo.s_nUI_Y = read.ReadUShort();
-                        if (!WorldMapInfoList.ContainsKey(mapInfo.s_nID))
+                        Cuid id = new Cuid();
+                        id.s_Name = read.ReadZString(Encoding.Unicode, 32 * 2);
+                        id.s_MsgType = read.ReadInt();
+
+
+
+                        if (!Cuid.ContainsKey(id.s_Name))
                         {
-                            WorldMapInfoList.Add(mapInfo.s_nID, mapInfo);
+                            Cuid.Add(id.s_Name, id);
+                        }
+
+                    }
+                    int scount = read.ReadInt();
+                    for (int g = 0; g < scount; g++)
+                    {
+                        CuidChat chat = new CuidChat();
+                        chat.s_Name = read.ReadZString(Encoding.Unicode, 32 * 2);
+                     
+
+
+
+                        if (!CuidChat.ContainsKey(chat.s_Name))
+                        {
+                            CuidChat.Add(chat.s_Name, chat);
                         }
 
                     }
                 }
             }
-            SysCons.LogDB("CuidDB.bin", "Loaded {0} CuidDB.", WorldMapInfoList.Count);
+            SysCons.LogDB("CuidDB.bin", $"Loaded {Cuid.Count} CuidDB. Loaded {CuidChat.Count} CuidChat.");
         }
     }
+
+    public class Cuid
+    {
+
+        public string s_Name;
+        public int s_MsgType;
+
+    }
+    public class CuidChat
+    {
+
+        public string s_Name;
+
+
+
+
+
+    }
+
 }
 

@@ -5,18 +5,18 @@ using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
 using Yggdrasil.Entities;
-using Yggdrasil;
 using Digital_World;
+
 
 namespace Yggdrasil.Database
 {
     public class DigimonParcelDB
     {
-        public static Dictionary<int, WorldMapInfo> WorldMapInfoList = new Dictionary<int, WorldMapInfo>();
+        public static Dictionary<int, Parcel> Parcel = new Dictionary<int, Parcel>();
 
         public static void Load(string fileName)
         {
-            if (File.Exists(fileName) == false) return;
+            
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
@@ -24,22 +24,30 @@ namespace Yggdrasil.Database
                     int count = read.ReadInt();
                     for (int i = 0; i < count; i++)
                     {
-                        read.Seek(4 + i * 476);
-                        WorldMapInfo mapInfo = new WorldMapInfo();
-                        mapInfo.s_nID = read.ReadUShort();
-                        mapInfo.s_nWorldType = read.ReadByte();
-                        mapInfo.s_nUI_X = read.ReadUShort();
-                        mapInfo.s_nUI_Y = read.ReadUShort();
-                        if (!WorldMapInfoList.ContainsKey(mapInfo.s_nID))
+                      
+                        Parcel parcel = new Parcel();
+                        parcel.m_listDigimon = read.ReadInt();
+                       
+                        if (!Parcel.ContainsKey(parcel.m_listDigimon))
                         {
-                            WorldMapInfoList.Add(mapInfo.s_nID, mapInfo);
+                            Parcel.Add(parcel.m_listDigimon, parcel);
                         }
 
                     }
                 }
             }
-            SysCons.LogDB("DigimonParcel.bin", "Loaded {0} DigimonParcel.", WorldMapInfoList.Count);
+            SysCons.LogDB("DigimonParcel.bin", "Loaded {0} DigimonParcel.", Parcel.Count);
         }
     }
+
+    public class Parcel
+    {
+        public int m_listDigimon;
+
+
+
+    }
+
+
 }
 

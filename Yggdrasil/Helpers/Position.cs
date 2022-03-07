@@ -28,9 +28,9 @@ namespace Yggdrasil.Helpers
 
         public Position(Portal Portal)
         {
-            this.Map = Portal.MapId;
-            this.PosX = Portal.uInts2[0];
-            this.PosY = Portal.uInts2[1];
+            this.Map = Portal.s_dwPortalID;
+            this.PosX = Portal.s_nDestTargetX;
+            this.PosY = Portal.s_nDestTargetY;
         }
 
         public override string ToString()

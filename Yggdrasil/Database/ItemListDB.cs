@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
-using Yggdrasil;
 using Digital_World;
+
 
 namespace Yggdrasil.Database
 {
@@ -163,9 +163,9 @@ namespace Yggdrasil.Database
                     read.ReadInt();
                     shop.ItemCount = read.ReadInt();
                     ShopItem.Add(shop);
-                }
+                }*/
 
-                read.Seek(28770038);
+                read.Seek(23999030);
 
                 if (XAI.Count > 0) return;
                 int XAICount = read.ReadInt();
@@ -178,7 +178,7 @@ namespace Yggdrasil.Database
                     XAI.Add(xai.ItemID, xai);
                 }
 
-
+                /*
                 read.Seek(28770456); ////endereço dentro do binario
 
                 int cContainers = read.ReadInt();

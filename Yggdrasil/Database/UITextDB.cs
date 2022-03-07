@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
-using Yggdrasil;
 using Digital_World;
+
 
 namespace Yggdrasil.Database
 {
     public class UITextDB
     {
-        public static Dictionary<int, WorldMapInfo> WorldMapInfoList = new Dictionary<int, WorldMapInfo>();
+        public static Dictionary<long, UIText> UIText = new Dictionary<long, UIText>();
 
         public static void Load(string fileName)
         {
@@ -23,22 +23,39 @@ namespace Yggdrasil.Database
                     int count = read.ReadInt();
                     for (int i = 0; i < count; i++)
                     {
-                        read.Seek(4 + i * 476);
-                        WorldMapInfo mapInfo = new WorldMapInfo();
-                        mapInfo.s_nID = read.ReadUShort();
-                        mapInfo.s_nWorldType = read.ReadByte();
-                        mapInfo.s_nUI_X = read.ReadUShort();
-                        mapInfo.s_nUI_Y = read.ReadUShort();
-                        if (!WorldMapInfoList.ContainsKey(mapInfo.s_nID))
+
+                        UIText text = new UIText();
+                        text.ID_Maybe = read.ReadLong(); 
+                        text.TextSize = read.ReadInt();
+                        text.Text = read.ReadZString(Encoding.ASCII, text.TextSize);    
+                        
+
+
+                        if (!UIText.ContainsKey(text.ID_Maybe))
                         {
-                            WorldMapInfoList.Add(mapInfo.s_nID, mapInfo);
+                            UIText.Add(text.ID_Maybe, text);
                         }
 
                     }
                 }
             }
-            SysCons.LogDB("UIText.bin", "Loaded {0} UIText.", WorldMapInfoList.Count);
+            SysCons.LogDB("UIText.bin", "Loaded {0} UIText.", UIText.Count);
         }
     }
+   public class UIText
+    {
+
+        public long  ID_Maybe;
+        public  int TextSize;
+        public string  Text;
+
+
+
+
+    }
+
+
+
+
 }
 

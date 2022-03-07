@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
-using Yggdrasil;
 using Digital_World;
+
 using Yggdrasil.Entities;
 
 
@@ -14,65 +14,76 @@ namespace Yggdrasil.Database
 
     public class MapMonsterListDB
     {
-        public static Dictionary<int, MapMonsters> Mapmonsters = new Dictionary<int, MapMonsters>();
+        public static Dictionary<int, MapMonsters> MapMonsters = new Dictionary<int, MapMonsters>();
 
         public static void Load(string fileName, List<MonsterEntity> MonstersEntity)
         {
-            if (File.Exists(fileName) == false) return;
+            if (File.Exists(fileName) == false) 
+                return;
+
             using (Stream s = File.OpenRead(fileName))
             {
-                if (Mapmonsters.Count > 0) return;
+                if (MapMonsters.Count > 0) 
+                    return;
+
                 using (BitReader read = new BitReader(s))
                 {
                     Random rand = new Random();
                     int count = read.ReadInt();
                     for (int i = 0; i < count; i++)
                     {
-                        MapMonsters monsters = new MapMonsters();
-                        monsters.MonsterID = read.ReadInt();
-                        monsters.Count = read.ReadInt();
-                        for (int g = 0; g < monsters.Count; g++)
+                        MapMonsters map = new MapMonsters();
+                        map.FileID = read.ReadInt();
+                        map.nSize = read.ReadInt();
+                        for (int j = 0; j < map.nSize; ++j)
                         {
-                            monsters.monster = new List<Monster>(monsters.Count);
-                            Monster monster = new Monster();
-                            monster.MapID = new int[monsters.Count];
-                            monster.MonsterCount = new int[monsters.Count];
-                            monster.MapID[g] = read.ReadInt();
-                            monster.MonsterCount[g] = read.ReadInt();
-                            monster.MonsterSpecies = new int[monster.MonsterCount[g]];
-                            monster.Position = new int[][] { new int[monster.MonsterCount[g]], new int[monster.MonsterCount[g]] };
-                            for (int u = 0; u < monster.MonsterCount[g]; u++)
+                            map.Map = read.ReadInt();
+                            map.MapNum = read.ReadInt();
+
+                            for (int k = 0; k < map.MapNum; k++)
                             {
-                                int MapID = read.ReadInt();
-                                MonsterEntity entity = new MonsterEntity();
-                                monster.MonsterSpecies[u] = read.ReadInt();
-                                monster.Position[0][u] = read.ReadInt();
-                                monster.Position[1][u] = read.ReadInt();
-                                entity.Species = monster.MonsterSpecies[u];
-                                entity.Location.Map = MapID;
-                                entity.Location.PosX = monster.Position[0][u];
-                                entity.Location.PosY = monster.Position[1][u];
+                                map.MapID = read.ReadInt();
+                                map.MonsterID = read.ReadInt();
+                                map.CenterX = read.ReadInt();
+                                map.CenterY = read.ReadInt();
+                                map.Radius = read.ReadInt();
+
+                                var entity = new MonsterEntity();
+                                entity.Species = map.MonsterID;
+                                entity.Location = new Position() { Map = map.MapID, PosX = map.CenterX, PosY = map.CenterY };
+                                entity.Collision = map.Radius;
                                 entity.Handle = 64999 + i + rand.Next(1, 5000);
-                                entity.Collision = read.ReadInt();
-                                LoadStats(entity);
-                                read.ReadInt();
-                                read.ReadInt();
-                                read.ReadInt();
-                                read.ReadInt();
-                                read.ReadInt();
-                                read.ReadInt();
-                                read.ReadInt();
-                                MonstersEntity.Add(entity);
+
+                                if(!MonstersEntity.Contains(entity))
+                                    MonstersEntity.Add(entity);
+
+                                map.Count = read.ReadInt();
+                                map.RespawnTime = read.ReadInt();
+                                map.KillGenMonFTID = read.ReadInt();
+                                map.KillgenCount = read.ReadInt();
+                                map.KillgenViewCnt = read.ReadInt();
+                                map.MoveType = read.ReadInt();
+                                map.InstRespawn = read.ReadByte();
+                                map.u10 = read.ReadShort();
+                                map.u2 = read.ReadByte();
+
                             }
-                            monsters.monster.Add(monster);
+
                         }
-                        Mapmonsters.Add(monsters.MonsterID, monsters);
+                        if (!MapMonsters.ContainsKey(map.FileID))
+                        {
+                            MapMonsters.Add(map.FileID, map);
+                        }
+
+                        if (!MapMonsters.ContainsKey(map.MonsterID))
+                        {
+                            MapMonsters.Add(map.MonsterID, map);
+                        }
                     }
                 }
             }
 
-            SysCons.LogDB("MapMonsterList.bin", "Loaded {0} monsters", Mapmonsters.Count);
-            SysCons.LogDB("Monster.bin", "Loaded {0} monsters", MonstersEntity.Count);
+            SysCons.LogDB("MapMonsterList.bin", "Loaded {0} monsters", MapMonsters.Count);
         }
 
         private static void LoadStats(MonsterEntity entity)
@@ -88,7 +99,7 @@ namespace Yggdrasil.Database
         public static MapMonsters GetMonster(int DigimonID)
         {
             MapMonsters iData = null;
-            foreach (KeyValuePair<int, MapMonsters> kvp in Mapmonsters)
+            foreach (KeyValuePair<int, MapMonsters> kvp in MapMonsters)
             {
                 if (kvp.Value.MonsterID == DigimonID)
                 {
@@ -102,16 +113,25 @@ namespace Yggdrasil.Database
 
     public class MapMonsters
     {
+        public int FileID;
+        public int nSize;
+        public int Map;
+        public int MapNum;
+        public int MapID;
         public int MonsterID;
+        public int CenterX;
+        public int CenterY;
+        public int Radius;
         public int Count;
-        public List<Monster> monster;
+        public int RespawnTime;
+        public int KillGenMonFTID;
+        public int KillgenCount;
+        public int KillgenViewCnt;
+        public int MoveType;
+        public byte InstRespawn;
+        public short u10;
+        public byte u2;
+        
     }
-    public class Monster
-    {
-        public int[] MapID;
-        public int[] MonsterSpecies;
-        public int MonsterID;
-        public int[] MonsterCount;
-        public int[][] Position;
-    }
+    
 }

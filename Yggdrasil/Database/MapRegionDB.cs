@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
-using Yggdrasil;
 using Digital_World;
+
 
 namespace Yggdrasil.Database
 {
     public class MapRegionDB
     {
-        public static List<Region> RegionList = new List<Region>();
+        public static List<Region> Region = new List<Region>();
 
         public static void Load(string fileName)
         {
@@ -27,24 +27,36 @@ namespace Yggdrasil.Database
                         int Count = read.ReadInt();
                         for (int h = 0; h < Count; h++)
                         {
-                            Region Regi = new Region();
-                            read.Seek(i * 604);
-                            Regi.Order = h;
+                           Region Regi = new Region();
+                            
                             Regi.MapId = read.ReadInt();
-                            Regi.X = read.ReadInt();
-                            Regi.Y = read.ReadInt();
-                            RegionList.Add(Regi);
+                            Regi.s_nCenterX = read.ReadInt();
+                            Regi.s_nCenterY = read.ReadInt();
+                            Regi.s_nRadius = read.ReadInt();
+                            Regi.s_szDiscript = read.ReadZString(Encoding.Unicode, 128 * 2);
+                            Regi.s_szDiscript_Eng = read.ReadZString(Encoding.Unicode, 128 * 2);
+                            Regi.s_cBGSound = read.ReadZString(Encoding.Unicode, 64);
+                            Regi.s_nFatigue_Type = read.ReadUShort();
+                            Regi.s_nFatigue_DeBuff = read.ReadUShort();
+                            Regi.s_nFatigue_DeBuff = read.ReadUShort();
+                            Regi.s_nFatigue_StartTime = read.ReadUShort();
+                            Regi.s_nFatigue_AddTime = read.ReadUShort();
+                            Regi.s_nFatigue_AddPoint = read.ReadInt();
+                            Regi.Order = h;
+                            
+                            
+                            Region.Add(Regi);
                         }
                     }
                 }
             }
-            SysCons.LogDB("MapRegion.bin", "Loaded {0} Regions", RegionList.Count);
+            SysCons.LogDB("MapRegion.bin", "Loaded {0} Regions", Region.Count);
         }
 
         public static Region GetID(int ID, int ID2)
         {
             Region item = null;
-            foreach (Region _item in RegionList)
+            foreach (Region _item in Region)
                 if (_item.MapId == ID && _item.Order == ID2)
                 {
                     item = _item;
@@ -53,12 +65,30 @@ namespace Yggdrasil.Database
             return item;
         }
 
+        public static Region GetById(int Id)
+        {
+            return Region.FirstOrDefault(x=>x.MapId == Id);
+        }
+
     }
     public class Region
+
+
     {
-        public int Order;
         public int MapId;
-        public int X;
-        public int Y;
+        public int s_nCenterX;
+        public int s_nCenterY;
+        public int s_nRadius;
+        public string s_szDiscript;
+        public string s_szDiscript_Eng;
+        public string s_cBGSound;
+        public ushort s_nFatigue_Type;
+        public ushort s_nFatigue_DeBuff;
+        public ushort s_nFatigue_StartTime;
+        public ushort s_nFatigue_AddTime;
+        public int s_nFatigue_AddPoint;
+        public int Order;
+        
+        
     }
 }

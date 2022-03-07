@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using Yggdrasil.Helpers;
 using System.IO;
-using Yggdrasil;
 using Digital_World;
+
 
 namespace Yggdrasil.Database
 {
@@ -15,7 +15,7 @@ namespace Yggdrasil.Database
         public static Dictionary<int, CsEmotion> CsEmotionList = new Dictionary<int, CsEmotion>();
         public static void Load(string fileName)
         {
-            if (File.Exists(fileName) == false) return;
+           
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
@@ -23,11 +23,15 @@ namespace Yggdrasil.Database
                     int count = read.ReadInt();
                     for (int i = 0; i < count; i++)
                     {
-                        read.Seek(4 + i * 476);
+                      
                         TamerListsINFO tamerListsINFO = new TamerListsINFO();
                         tamerListsINFO.s_dwTamerID = read.ReadInt();
-                        tamerListsINFO.s_cSoundDirName = read.ReadUShort();
-                        tamerListsINFO.s_nTamerType = read.ReadByte();
+                        tamerListsINFO.s_szName = read.ReadZString(Encoding.Unicode, 64);
+                        tamerListsINFO.s_cSoundDirName = read.ReadZString(Encoding.Unicode, 88);
+                        tamerListsINFO.s_szComment = read.ReadZString(Encoding.Unicode, 512 );
+                        //tamerListsINFO.s_nTamerType = read.ReadByte();
+                        tamerListsINFO.s_szPart = read.ReadZString(Encoding.Unicode, 64 );
+                        tamerListsINFO.s_szGender = read.ReadZString(Encoding.Unicode, 64 );
                         if (!TamerListsINFOList.ContainsKey(tamerListsINFO.s_dwTamerID))
                         {
                             TamerListsINFOList.Add(tamerListsINFO.s_dwTamerID, tamerListsINFO);
@@ -66,9 +70,9 @@ namespace Yggdrasil.Database
     public class TamerListsINFO
     {
 		public int s_dwTamerID;
-		//TCHAR s_szName[MAX_FILENAME];
+		public string s_szName;
 
-		public int s_cSoundDirName/*[MAX_FILENAME]*/;
+		public string s_cSoundDirName;
 
 		// ÄÉ¸¯ÅÍ Å¸ÀÔ
 		public byte s_nTamerType;

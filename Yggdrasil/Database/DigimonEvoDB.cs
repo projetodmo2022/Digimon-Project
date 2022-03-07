@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Yggdrasil.Helpers;
-using Yggdrasil;
 using Digital_World;
+using System.Linq;
+
 namespace Yggdrasil.Database
 {
     /// <summary>
@@ -17,7 +18,12 @@ namespace Yggdrasil.Database
         {
             int get_position = 0;
 
-            if (File.Exists(fileName) == false) return;
+            if (EvolutionList.Any())
+                return;
+
+            if (File.Exists(fileName) == false) 
+                return;
+
             using (Stream s = File.OpenRead(fileName))
             {
                 using (BitReader read = new BitReader(s))
