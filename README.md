@@ -12,8 +12,4 @@ Navicat 16 for MySQL    ===>>>>  https://download3.navicat.com/download/navicat1
 
 HeidiSQL   ==>>>  https://www.heidisql.com/installers/HeidiSQL_11.3.0.6295_Setup.exe
 
-To use phpmyadmin you have to install apache and put the src of phpmyadmin in root..
-
-
-
-Discord ==>>  https://discord.gg/7QjbWMUaZW
+To use phpmyadmin you have to install apache and put the src of phpmyadmin in root.
